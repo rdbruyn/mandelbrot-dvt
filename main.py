@@ -1,16 +1,25 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+8 to toggle the breakpoint.
+from mandelbrot import stability
+import numpy as np
+from PIL import Image
 
 
-# Press the green button in the gutter to run the script.
+def main():
+    w, h = 900, 600
+
+    w_step = 3 / w
+    h_step = 2 / h
+
+    stability_count = [stability(complex(i, j))
+                       for j in np.arange(1, -1, -h_step)
+                       for i in np.arange(-2, 1, w_step)]
+
+    pixels = np.array(stability_count, dtype=np.uint8)
+    pixels[pixels < 200] = 255
+    pixels[pixels == 200] = 0
+
+    img = Image.frombuffer('L', size=(w, h), data=pixels)
+    img.save('mandelbrot.jpg')
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()

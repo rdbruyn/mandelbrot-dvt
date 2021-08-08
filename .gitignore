@@ -137,5 +137,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# ignore idea stuff too
+# ignore idea stuff and generated images
 .idea/
+*.jpg
