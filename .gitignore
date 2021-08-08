@@ -140,3 +140,4 @@ cython_debug/
 # ignore idea stuff and generated images
 .idea/
 *.jpg
+*.png

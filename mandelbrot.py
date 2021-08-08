@@ -1,4 +1,15 @@
 from math import sqrt
+from typing import List
+
+import numpy as np
+from nptyping import ndarray
+
+BLACK = [0, 0, 0]
+DARK_BLUE = [37, 91, 148]
+LIGHT_BLUE = [45, 132, 224]
+YELLOW = [224, 192, 33]
+DARK_PURPLE = [90, 7, 148]
+LIGHT_PURPLE = [141, 22, 224]
 
 
 def next_iteration(z: complex, c: complex) -> complex:
@@ -22,3 +33,22 @@ def _stability(z: complex, c: complex, count: int) -> int:
 
 def stability(z: complex) -> int:
     return _stability(0, z, 0)
+
+
+def make_pixels(stability_counts: List[int]) -> ndarray:
+    return np.array([stability_to_rgb(s) for s in stability_counts], dtype=np.uint8)
+
+
+def stability_to_rgb(s: int) -> ndarray:
+    if s == 200:
+        return BLACK
+    elif s > 100:
+        return LIGHT_PURPLE
+    elif s > 50:
+        return DARK_PURPLE
+    elif s > 23:
+        return LIGHT_BLUE
+    elif s > 3:
+        return YELLOW
+    else:
+        return DARK_BLUE
